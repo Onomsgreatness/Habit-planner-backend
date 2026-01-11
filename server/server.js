@@ -2,10 +2,11 @@ const express = requires("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/dbConn");
 
+//Load environment variables
 dotenv.config({path: "./config.env"});
 
 const app = express();
-app.use(express.json());
+app.use(express.json());    //Middleware
 
 //Connect DB
 connectDB();
