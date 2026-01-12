@@ -27,3 +27,4 @@ startServer();
 //Routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/test", require("./routes/testRoutes"));
+app.use("/api/habits", require("./routes/habitRoutes"));
