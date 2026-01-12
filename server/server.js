@@ -23,3 +23,6 @@ const startServer = async () => {
 };
 
 startServer();
+
+//Routes
+app.use("/api/users", require("./routes/userRoutes"));
