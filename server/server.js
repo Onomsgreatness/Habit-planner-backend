@@ -28,3 +28,4 @@ startServer();
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/test", require("./routes/testRoutes"));
 app.use("/api/habits", require("./routes/habitRoutes"));
+app.use("/api/progress", require("./routes/progressRoutes"));
