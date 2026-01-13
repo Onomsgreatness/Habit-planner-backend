@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  title: Habit Planner API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5001
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/users/register:
+    post:
+      summary: Register user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: Created
+        "409":
+          description: Email already in use
+
+  /api/users/login:
+    post:
+      summary: Login user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/habits:
+    get:
+      summary: Get habits for logged-in user
+      responses:
+        "200":
+          description: OK
+    post:
+      summary: Create habit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+                frequency:
+                  type: string
+                  enum: [daily, weekdays, custom]
+                reminderTime:
+                  type: string
+                  example: "08:00"
+                active:
+                  type: boolean
+      responses:
+        "201":
+          description: Created
+
+  /api/habits/{id}:
+    put:
+      summary: Update habit
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: OK
+    delete:
+      summary: Delete habit
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Deleted
+
+  /api/progress/complete:
+    post:
+      summary: Mark habit complete for a date
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [habitId, date]
+              properties:
+                habitId:
+                  type: string
+                date:
+                  type: string
+                  example: "2026-01-13"
+      responses:
+        "201":
+          description: Created/Updated
+
+  /api/progress:
+    get:
+      summary: Get progress for a habit (optional date range)
+      parameters:
+        - in: query
+          name: habitId
+          required: true
+          schema: { type: string }
+        - in: query
+          name: from
+          required: false
+          schema: { type: string }
+        - in: query
+          name: to
+          required: false
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
