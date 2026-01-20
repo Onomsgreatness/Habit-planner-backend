@@ -40,3 +40,27 @@ exports.login = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 };
+
+exports.me = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("name email createdAt");
+    if (!user) return res.status(404).json({ message: "user not found" });
+    return res.json(user);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateMe = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { name: name?.trim() },
+      { new: true, runValidators: true }
+    ).select("name email");
+    return res.json(user);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
