@@ -8,14 +8,15 @@ const signToken = (userId) => {
 
 exports.register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
+    if (!name) return res.status(400).json({ message: "name is required" });
     if (!email || !password) return res.status(400).json({ message: "email and password required" });
 
     const existing = await User.findOne({ email });
     if (existing) return res.status(409).json({ message: "email already in use" });
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = await User.create({ email, passwordHash });
+    const user = await User.create({ name: name?.trim(), email, passwordHash });
 
     return res.status(201).json({ token: signToken(user._id) });
   } catch (err) {
