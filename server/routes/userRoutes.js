@@ -7,6 +7,6 @@ const { register, login, me, updateMe } = require("../controllers/userController
 router.post("/register", register);
 router.post("/login", login);
 router.get("/me", auth, me);
-router.put("/updateMe", auth, updateMe);
+router.put("/me", auth, updateMe);
 
 module.exports = router;
