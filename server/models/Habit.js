@@ -6,7 +6,7 @@ const habitSchema = new mongoose.Schema(
     title: { type: String, required: true, trim: true },
     frequency: {
       type: String,
-      enum: ["daily", "weekdays", "custom"],
+      enum: ["daily", "weekdays", "weekends", "custom"],
       default: "daily",
     },
     reminderTime: { type: String, default: null }, // "08:00"
