@@ -61,7 +61,7 @@ paths:
         "200":
           description: OK
 
-    /api/users/me:
+  /api/users/me:
     get:
       summary: Get logged-in user's profile
       security:
